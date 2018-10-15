@@ -2,459 +2,459 @@
 class BionetApi():
 	def __init__(self,bionetClient):
 		self.bionetClient = bionetClient
-	def requestSendMTA(self,requestID,description,cb):
+	async def requestSendMTA(self,requestID,description,cb):
 		rpcRequest = {
 			"method":"requestSendMTA",
 			"args":[requestID,description]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def requestBuyShippingLabel(self,requestID,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def requestBuyShippingLabel(self,requestID,cb):
 		rpcRequest = {
 			"method":"requestBuyShippingLabel",
 			"args":[requestID]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def requestPrintShippingLabel(self,requestID,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def requestPrintShippingLabel(self,requestID,cb):
 		rpcRequest = {
 			"method":"requestPrintShippingLabel",
 			"args":[requestID]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def printShippingLabel(self,address,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def printShippingLabel(self,address,cb):
 		rpcRequest = {
 			"method":"printShippingLabel",
 			"args":[address]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def getWorkbench(self,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def getWorkbench(self,cb):
 		rpcRequest = {
 			"method":"getWorkbench",
 			"args":[]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def workbenchTree(self,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def workbenchTree(self,cb):
 		rpcRequest = {
 			"method":"workbenchTree",
 			"args":[]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def getFavLocations(self,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def getFavLocations(self,cb):
 		rpcRequest = {
 			"method":"getFavLocations",
 			"args":[]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def favLocationsTree(self,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def favLocationsTree(self,cb):
 		rpcRequest = {
 			"method":"favLocationsTree",
 			"args":[]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def saveFavLocation(self,material,imageData,doPrint,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def saveFavLocation(self,material,imageData,doPrint,cb):
 		rpcRequest = {
 			"method":"saveFavLocation",
 			"args":[material,imageData,doPrint]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def getChildren(self,id,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def getChildren(self,id,cb):
 		rpcRequest = {
 			"method":"getChildren",
 			"args":[id]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def saveInWorkbench(self,material,imageData,doPrint,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def saveInWorkbench(self,material,imageData,doPrint,cb):
 		rpcRequest = {
 			"method":"saveInWorkbench",
 			"args":[material,imageData,doPrint]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def getID(self,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def getID(self,cb):
 		rpcRequest = {
 			"method":"getID",
 			"args":[]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def clearDeleted(self,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def clearDeleted(self,cb):
 		rpcRequest = {
 			"method":"clearDeleted",
 			"args":[]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def undelete(self,key,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def undelete(self,key,cb):
 		rpcRequest = {
 			"method":"undelete",
 			"args":[key]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def delPhysical(self,id,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def delPhysical(self,id,cb):
 		rpcRequest = {
 			"method":"delPhysical",
 			"args":[id]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def delVirtual(self,id,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def delVirtual(self,id,cb):
 		rpcRequest = {
 			"method":"delVirtual",
 			"args":[id]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def physicalAutocomplete(self,query,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def physicalAutocomplete(self,query,cb):
 		rpcRequest = {
 			"method":"physicalAutocomplete",
 			"args":[query]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def addToCart(self,physical_id,name,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def addToCart(self,physical_id,name,cb):
 		rpcRequest = {
 			"method":"addToCart",
 			"args":[physical_id,name]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def delFromCart(self,physical_id,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def delFromCart(self,physical_id,cb):
 		rpcRequest = {
 			"method":"delFromCart",
 			"args":[physical_id]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def emptyCart(self,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def emptyCart(self,cb):
 		rpcRequest = {
 			"method":"emptyCart",
 			"args":[]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def getType(self,name,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def getType(self,name,cb):
 		rpcRequest = {
 			"method":"getType",
 			"args":[name]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def createAutocomplete(self,type,query,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def createAutocomplete(self,type,query,cb):
 		rpcRequest = {
 			"method":"createAutocomplete",
 			"args":[type,query]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def saveVirtual(self,material,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def saveVirtual(self,material,cb):
 		rpcRequest = {
 			"method":"saveVirtual",
 			"args":[material]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def savePhysical(self,material,imageData,doPrint,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def savePhysical(self,material,imageData,doPrint,cb):
 		rpcRequest = {
 			"method":"savePhysical",
 			"args":[material,imageData,doPrint]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def elasticSearch(self,query,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def elasticSearch(self,query,cb):
 		rpcRequest = {
 			"method":"elasticSearch",
 			"args":[query]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def inventoryTree(self,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def inventoryTree(self,cb):
 		rpcRequest = {
 			"method":"inventoryTree",
 			"args":[]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def getParentPath(self,id,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def getParentPath(self,id,cb):
 		rpcRequest = {
 			"method":"getParentPath",
 			"args":[id]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def getLocationPath(self,id,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def getLocationPath(self,id,cb):
 		rpcRequest = {
 			"method":"getLocationPath",
 			"args":[id]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def getPath(self,id,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def getPath(self,id,cb):
 		rpcRequest = {
 			"method":"getPath",
 			"args":[id]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def getImmediateChildren(self,path,key,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def getImmediateChildren(self,path,key,cb):
 		rpcRequest = {
 			"method":"getImmediateChildren",
 			"args":[path,key]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def getLocationPathChildren(self,id,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def getLocationPathChildren(self,id,cb):
 		rpcRequest = {
 			"method":"getLocationPathChildren",
 			"args":[id]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def getVirtualBy(self,field,value,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def getVirtualBy(self,field,value,cb):
 		rpcRequest = {
 			"method":"getVirtualBy",
 			"args":[field,value]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def getBy(self,field,value,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def getBy(self,field,value,cb):
 		rpcRequest = {
 			"method":"getBy",
 			"args":[field,value]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def search(self,query,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def search(self,query,cb):
 		rpcRequest = {
 			"method":"search",
 			"args":[query]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def getUser(self,id,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def getUser(self,id,cb):
 		rpcRequest = {
 			"method":"getUser",
 			"args":[id]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def delUser(self,id,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def delUser(self,id,cb):
 		rpcRequest = {
 			"method":"delUser",
 			"args":[id]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def saveUser(self,id,userData,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def saveUser(self,id,userData,cb):
 		rpcRequest = {
 			"method":"saveUser",
 			"args":[id,userData]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def getPeers(self,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def getPeers(self,cb):
 		rpcRequest = {
 			"method":"getPeers",
 			"args":[]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def peerSearchOld(self,query,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def peerSearchOld(self,query,cb):
 		rpcRequest = {
 			"method":"peerSearchOld",
 			"args":[query]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def peerBlast(self,query,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def peerBlast(self,query,cb):
 		rpcRequest = {
 			"method":"peerBlast",
 			"args":[query]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def emptyRequestTrash(self,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def emptyRequestTrash(self,cb):
 		rpcRequest = {
 			"method":"emptyRequestTrash",
 			"args":[]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def changeRequestTrashed(self,id,trashed,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def changeRequestTrashed(self,id,trashed,cb):
 		rpcRequest = {
 			"method":"changeRequestTrashed",
 			"args":[id,trashed]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def changeRequestStatus(self,id,status,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def changeRequestStatus(self,id,status,cb):
 		rpcRequest = {
 			"method":"changeRequestStatus",
 			"args":[id,status]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def requestMaterial(self,peerID,id,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def requestMaterial(self,peerID,id,cb):
 		rpcRequest = {
 			"method":"requestMaterial",
 			"args":[peerID,id]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def freegenesCreatePlate(self,parent_id,name,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def freegenesCreatePlate(self,parent_id,name,cb):
 		rpcRequest = {
 			"method":"freegenesCreatePlate",
 			"args":[parent_id,name]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def freegenesCreatePart(self,virtual_id,parent_id,name,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def freegenesCreatePart(self,virtual_id,parent_id,name,cb):
 		rpcRequest = {
 			"method":"freegenesCreatePart",
 			"args":[virtual_id,parent_id,name]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def getPandadocStatus(self,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def getPandadocStatus(self,cb):
 		rpcRequest = {
 			"method":"getPandadocStatus",
 			"args":[]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def foo_user(self,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def foo_user(self,cb):
 		rpcRequest = {
 			"method":"foo_user",
 			"args":[]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def testStream(self,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def testStream(self,cb):
 		rpcRequest = {
 			"method":"testStream",
 			"args":[]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def listDeleted(self,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def listDeleted(self,cb):
 		rpcRequest = {
 			"method":"listDeleted",
 			"args":[]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def cartStream(self,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def cartStream(self,cb):
 		rpcRequest = {
 			"method":"cartStream",
 			"args":[]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def clearRequests(self,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def clearRequests(self,cb):
 		rpcRequest = {
 			"method":"clearRequests",
 			"args":[]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def getRequests(self,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def getRequests(self,cb):
 		rpcRequest = {
 			"method":"getRequests",
 			"args":[]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def recentChanges(self,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def recentChanges(self,cb):
 		rpcRequest = {
 			"method":"recentChanges",
 			"args":[]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def getUsers(self,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def getUsers(self,cb):
 		rpcRequest = {
 			"method":"getUsers",
 			"args":[]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def getInventoryRoot(self,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def getInventoryRoot(self,cb):
 		rpcRequest = {
 			"method":"getInventoryRoot",
 			"args":[]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def getPeerInfo(self,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def getPeerInfo(self,cb):
 		rpcRequest = {
 			"method":"getPeerInfo",
 			"args":[]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def getStatus(self,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def getStatus(self,cb):
 		rpcRequest = {
 			"method":"getStatus",
 			"args":[]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def foo(self,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def foo(self,cb):
 		rpcRequest = {
 			"method":"foo",
 			"args":[]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def checkMasterPassword(self,password,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def checkMasterPassword(self,password,cb):
 		rpcRequest = {
 			"method":"checkMasterPassword",
 			"args":[password]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def createUser(self,username,email,password,opts,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def createUser(self,username,email,password,opts,cb):
 		rpcRequest = {
 			"method":"createUser",
 			"args":[username,email,password,opts]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def getRequestStatus(self,pandadocID,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def getRequestStatus(self,pandadocID,cb):
 		rpcRequest = {
 			"method":"getRequestStatus",
 			"args":[pandadocID]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def getRequest(self,key,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def getRequest(self,key,cb):
 		rpcRequest = {
 			"method":"getRequest",
 			"args":[key]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def createRequest(self,virtual_id,data,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def createRequest(self,virtual_id,data,cb):
 		rpcRequest = {
 			"method":"createRequest",
 			"args":[virtual_id,data]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def getByHumanID(self,humanID,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def getByHumanID(self,humanID,cb):
 		rpcRequest = {
 			"method":"getByHumanID",
 			"args":[humanID]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def verifyUser(self,code,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def verifyUser(self,code,cb):
 		rpcRequest = {
 			"method":"verifyUser",
 			"args":[code]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def requestPasswordReset(self,emailOrName,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def requestPasswordReset(self,emailOrName,cb):
 		rpcRequest = {
 			"method":"requestPasswordReset",
 			"args":[emailOrName]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def checkPasswordResetCode(self,resetCode,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def checkPasswordResetCode(self,resetCode,cb):
 		rpcRequest = {
 			"method":"checkPasswordResetCode",
 			"args":[resetCode]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def completePasswordReset(self,resetCode,password,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def completePasswordReset(self,resetCode,password,cb):
 		rpcRequest = {
 			"method":"completePasswordReset",
 			"args":[resetCode,password]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def blast(self,query,opts,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def blast(self,query,opts,cb):
 		rpcRequest = {
 			"method":"blast",
 			"args":[query,opts]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def get(self,id,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def get(self,id,cb):
 		rpcRequest = {
 			"method":"get",
 			"args":[id]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def requestLocalMaterial(self,id,requesterEmail,physicalAddress,name,org,msg,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def requestLocalMaterial(self,id,requesterEmail,physicalAddress,name,org,msg,cb):
 		rpcRequest = {
 			"method":"requestLocalMaterial",
 			"args":[id,requesterEmail,physicalAddress,name,org,msg]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def searchVirtuals(self,query,opts,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def searchVirtuals(self,query,opts,cb):
 		rpcRequest = {
 			"method":"searchVirtuals",
 			"args":[query,opts]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def searchPhysicals(self,query,opts,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def searchPhysicals(self,query,opts,cb):
 		rpcRequest = {
 			"method":"searchPhysicals",
 			"args":[query,opts]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def blastStream(self,query,opts,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def blastStream(self,query,opts,cb):
 		rpcRequest = {
 			"method":"blastStream",
 			"args":[query,opts]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
-	def peerSearch(self,methodName,query,opts,cb):
+		await self.bionetClient.arpc(rpcRequest, cb)
+	async def peerSearch(self,methodName,query,opts,cb):
 		rpcRequest = {
 			"method":"peerSearch",
 			"args":[methodName,query,opts]
 		}
-		self.bionetClient.rpc(rpcRequest, cb)
+		await self.bionetClient.arpc(rpcRequest, cb)

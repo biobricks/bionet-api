@@ -15,12 +15,6 @@ def oolog(msg):
 
 class BionetClient():
 
-    ws_open = False
-    eventLoop = None
-
-    def __init__(self, socketUrl):
-        self.wsUrl = socketUrl
-
     async def arpc(self, request, consumer):
         io = StringIO()
         try:
@@ -33,47 +27,43 @@ class BionetClient():
 
         jsonMessage = json.loads(message)
         await consumer(jsonMessage)
-        """
-        try:
-            jsonMessage = json.loads(message)
-            await consumer(jsonMessage)
-        except:
-            oolog("arpc: error in json.loads"+message)
-        """
 
-    def rpc(self, request, consumer):
+    def connect(self, wsUrl, consumer):
         async def runRpc():
             async with websockets.connect(
-                    self.wsUrl, subprotocols=["bionet-protocol"]) as websocket:
+                    wsUrl, subprotocols=["bionet-protocol"]) as websocket:
                 self.websocket = websocket
-                await self.arpc(request, consumer)
+                await consumer()
 
         loop = asyncio.get_event_loop()
         loop.run_until_complete(runRpc())
 
 if __name__ == "__main__":
 
-    bionetClient = BionetClient("ws://localhost:8088")
+    bionetClient = BionetClient()
     bionetApi = BionetApi(bionetClient)
 
-    async def rpcGetResult(response):
-        oolog('\nrpcGetResult:\n')
-        io = StringIO()
-        json.dump(response, io)
-        oolog(io.getvalue())
+    async def run():
+        async def rpcGetResult(response):
+            oolog('\nrpcGetResult:\n')
+            io = StringIO()
+            json.dump(response, io)
+            oolog(io.getvalue())
 
-    async def rpcSearchResultCSV(response):
-        oolog('\nrpcSearchResultCSV:\n')
+        async def rpcSearchResultCSV(response):
+            oolog('\nrpcSearchResultCSV:\n')
 
-        def writeSearchResultRow(row):
-            result = row['value']
-            created = result['created']
-            updated = result['updated']
-            rowOutput = '"{name}","{description}","{sequence}","{created}","{updated}","{id}"'.format(name=result['name'],description=result['description'],sequence=result['sequence'],created=created['user'],updated=updated['user'],id=result['id'])
-            oolog(rowOutput)
+            def writeSearchResultRow(row):
+                result = row['value']
+                created = result['created']
+                updated = result['updated']
+                rowOutput = '"{name}","{description}","{sequence}","{created}","{updated}","{id}"'.format(name=result['name'],description=result['description'],sequence=result['sequence'],created=created['user'],updated=updated['user'],id=result['id'])
+                oolog(rowOutput)
 
-        for row in response:
-            writeSearchResultRow(row)
+            for row in response:
+                writeSearchResultRow(row)
+        await bionetApi.searchVirtuals("r",{},rpcSearchResultCSV)
+        await bionetApi.get("v-2773e301-03bd-4599-b46c-6fb46aa4b054",rpcGetResult)
 
-    bionetApi.searchVirtuals("r",{},rpcSearchResultCSV)
-    bionetApi.get("v-2773e301-03bd-4599-b46c-6fb46aa4b054",rpcGetResult)
+    bionetClient.connect("ws://localhost:8088",run)
+
