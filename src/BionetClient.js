@@ -1,5 +1,6 @@
 "use strict";
 
+global.document=require('./fakeDoc')
 const rpc = require('./rpc')
 const fs = require('fs');
 const proxyService = require('./ProxyService')
