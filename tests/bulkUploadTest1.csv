@@ -1,0 +1,8 @@
+Name,Type,Created By,Created,Description,Sequence,Physical Instances,Well
+TS_1iH1,vector,username,Tue Jun 27 2017,Tim’s plasmid 1,atcgag,1,D6
+TS_2iH1,vector,username,Tue Jun 27 2017,Tim’s plasmid 2,atatatat,1,A5
+TS_3iH1,vector,username,Tue Jun 27 2017,Tim’s plasmid 3,atcgcgcgcg,1,B5
+TS_4iH1,vector,username,Tue Jun 27 2017,Tim’s plasmid 4,atcgatcg,1,E2
+TS_5iH1,vector,username,Tue Jun 27 2017,Tim’s plasmid 5,atcgagcgcga,1,C7
+TS_6iH1,vector,username,Tue Jun 27 2017,Tim’s plasmid 6,tgctcgat,1,B1
+TS_7iH1,vector,username,Tue Jun 27 2017,Tim’s plasmid 7,gtatagatgat,1,A2
