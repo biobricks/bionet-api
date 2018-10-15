@@ -6,64 +6,45 @@ to run, first start bionetProxy:
 """
 
 import asyncio
-import websockets
 from io import StringIO
 import json
 from BionetPythonApi import BionetApi
-def oolog(msg):
-    print(msg)
-
-class BionetClient():
-
-    async def arpc(self, request, consumer):
-        io = StringIO()
-        try:
-            json.dump(request, io)
-        except:
-            oolog("arpc: error in json.dump")
-
-        await self.websocket.send(io.getvalue())
-        message = await self.websocket.recv()
-
-        jsonMessage = json.loads(message)
-        await consumer(jsonMessage)
-
-    def connect(self, wsUrl, consumer):
-        async def runRpc():
-            async with websockets.connect(
-                    wsUrl, subprotocols=["bionet-protocol"]) as websocket:
-                self.websocket = websocket
-                await consumer()
-
-        loop = asyncio.get_event_loop()
-        loop.run_until_complete(runRpc())
 
 if __name__ == "__main__":
 
-    bionetClient = BionetClient()
-    bionetApi = BionetApi(bionetClient)
+    bionetApi = BionetApi()
 
     async def run():
         async def rpcGetResult(response):
-            oolog('\nrpcGetResult:\n')
+            print('\nrpcGetResult:\n')
             io = StringIO()
             json.dump(response, io)
-            oolog(io.getvalue())
+            print(io.getvalue())
 
         async def rpcSearchResultCSV(response):
-            oolog('\nrpcSearchResultCSV:\n')
+            print('\nrpcSearchResultCSV:\n')
 
-            def writeSearchResultRow(row):
+            async def writeSearchResultRow(row):
                 result = row['value']
-                created = result['created']
-                updated = result['updated']
-                rowOutput = '"{name}","{description}","{sequence}","{created}","{updated}","{id}"'.format(name=result['name'],description=result['description'],sequence=result['sequence'],created=created['user'],updated=updated['user'],id=result['id'])
-                oolog(rowOutput)
+                id = result['id']
+
+                async def getVirtual(response):
+                    virtualData=response
+                    freeGenes = virtualData['freeGenes']
+                    freeGenesStage = virtualData['freeGenesStage']
+                    created = result['created']
+                    updated = result['updated']
+                    #rowOutput = '"{name}","{description}","{sequence}","{freeGenes}","{freeGenesStage}","{id}"'.format(name=result['name'],description=result['description'],sequence=result['sequence'],freeGenes=freeGenes,freeGenesStage=freeGenesStage,id=result['id'])
+                    rowOutput = '"{name}","{freeGenes}","{freeGenesStage}","{id}"'.format(name=result['name'],freeGenes=freeGenes,freeGenesStage=freeGenesStage,id=result['id'])
+                    print(rowOutput)
+
+                await bionetApi.get(id,getVirtual)
 
             for row in response:
-                writeSearchResultRow(row)
+                await writeSearchResultRow(row)
+
         await bionetApi.searchVirtuals("r",{},rpcSearchResultCSV)
         await bionetApi.get("v-2773e301-03bd-4599-b46c-6fb46aa4b054",rpcGetResult)
 
-    bionetClient.connect("ws://localhost:8088",run)
+    bionetApi.connect("ws://localhost:8088",run)
 
