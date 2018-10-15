@@ -65,7 +65,7 @@ function getCommandLineArgs() {
                 console.log('invalid host config parameters')
                 process.exit()
             }
-            genHostConfig=true
+            //genHostConfig=true
         }
         else if (val.indexOf('-genHostConfig') >= 0) {
             genHostConfig = true
