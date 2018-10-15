@@ -6,7 +6,6 @@ var reconnectDelay = 2;
 var reconnectAttempts = 0;
 var reconnectAttemptsMax = 10;
 var authToken = null
-
 function reconnect(protocol, host, token, cb) {
   if (reconnectAttempts > reconnectAttemptsMax) {
     /*
@@ -106,6 +105,7 @@ function connector(protocol, host, token, cb) {
 }
 
 function connect(protocol, host, token, cb) {
+  global.document={}
   //console.log("attempting to connect");
   connector(protocol, host, token, function (err, remote, user) {
     if(err) {

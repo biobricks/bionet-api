@@ -1,16 +1,17 @@
 #!/usr/bin/env node
 
 "use strict";
+global.document = require('./fakeDoc')
 const BionetClient = require('./BionetClient.js')
 
 var protocol = 'https'
 var host = null
-var token= null
+var token = null
 var hostConfig = null
 var genHostConfig = false
 var rpc_method = null
 var rpc_args = null
-var proxyPort = "8088"
+var proxyPort = null
 var username = null
 var password = null
 var import_file = null
@@ -43,13 +44,8 @@ function getCommandLineArgs() {
             host = hostConfig.host
             authToken = hostConfig.token
         }
-        else if (val.indexOf('-hostConfig') >= 0) {
-            const hostConfig = {
-                protocol: protocol,
-                host: host,
-                token: authToken
-            }
-            genHostConfig=true
+        else if (val.indexOf('-genHostConfig') >= 0) {
+            genHostConfig = true
         }
         else if (val.indexOf('-listen') >= 0) {
             proxyPort = getParam(val)
@@ -91,12 +87,7 @@ function getCommandLineArgs() {
 
 getCommandLineArgs()
 
-if (genHostConfig) {
-    console.log(JSON.stringify(hostConfig, null, 2))
-    process.exit()
-}
-
-bionetClient.connect(protocol, host, token, function (err, _remote, _user) {
+bionetClient.connect(protocol, host, token, function (err, _remote, _user, authToken) {
 
     if (err) {
         log("error connecting")
@@ -132,7 +123,17 @@ bionetClient.connect(protocol, host, token, function (err, _remote, _user) {
     if (!_user) {
         bionetClient.login(username, password, function (err, _user, _token) {
             token = _token
-            run()
+            if (genHostConfig) {
+                //console.log("genHostConfig, token:",token,_user)
+                const hostConfig = {
+                    protocol: protocol,
+                    host: host,
+                    token: token
+                }
+                console.log(JSON.stringify(hostConfig, null, 2))
+                process.exit()
+            }
+            else run()
         })
     } else {
         run()

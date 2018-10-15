@@ -156,7 +156,7 @@ module.exports = class BionetClient {
             }
             self.user = _user
             self.authToken = _token
-            cb(err, _user)
+            cb(err, _user, _token)
         })
     }
 
