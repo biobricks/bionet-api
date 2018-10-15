@@ -59,6 +59,11 @@ node ./src/bionetProxyServer -genHostConfig -protocol=https -host=endylab.stanfo
 Connect to server via token, listen for requests on port 8088:
 node ./src/bionetProxyServer -hostConfig=config.json -listen=8088
 
+Upload batch of virtuals, create physical instances and place into container (note: replace container_id with actual id)
+
+node ./src/bionetProxyServer -hostConfig=config.json -import_file=./tests/bulkUploadTest1.csv -import_format=csv \
+-upload_method=virtual_to_physical -upload_container=container_id
+
 ```
 # Running the python api example
 
