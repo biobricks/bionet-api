@@ -50,6 +50,8 @@ npm install
 
 ## Usage examples:
 ```
+Run the following commands from bionet-api:
+
 Connect to server and login as user, listen for requests on port 8088:
 node ./src/bionetProxyServer -protocol=https -host=endylab.stanford.edu -listen=8088 -username=xxxx -password=xxxx
 
@@ -71,5 +73,11 @@ node ./src/bionetProxyServer -hostConfig=config.json -import_file=./tests/bulkUp
 
 ## Usage:
 ```
+Run the following commands from bionet-api:
+
+If bionet proxy service is not running, start proxy:
+node ./src/bionetProxyServer -hostConfig=config.json -listen=8088
+
+In separate terminal, run the following 
 python3 ./examples/bionetPythonApiExample.py
 ```
