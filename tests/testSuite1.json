@@ -1,0 +1,22 @@
+[
+    {
+        "method": "config",
+        "args": [
+            {
+                "export_format":"csv"
+            }
+        ]
+    },
+    {
+        "method": "searchVirtuals",
+        "args": [
+            "r"
+        ]
+    },
+    {
+        "method": "get",
+        "args": [
+            "v-2773e301-03bd-4599-b46c-6fb46aa4b054"
+        ]
+    }
+]
