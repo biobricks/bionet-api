@@ -3,10 +3,11 @@
 "use strict";
 global.document = require('./fakeDoc')
 const BionetClient = require('./BionetClient.js')
+const fs = require('fs');
 
 var protocol = 'https'
 var host = null
-var token = null
+var authToken = null
 var hostConfig = null
 var genHostConfig = false
 var rpc_method = null
@@ -36,7 +37,7 @@ function getCommandLineArgs() {
         // todo: print error message and die if required arguments missing
 
         if (val.indexOf('-hostConfig') >= 0) {
-            hostConfigFile = getParam(val)
+            var hostConfigFile = getParam(val)
             const data = fs.readFileSync(hostConfigFile)
             if (!data) return
             hostConfig = JSON.parse(data)
@@ -87,7 +88,7 @@ function getCommandLineArgs() {
 
 getCommandLineArgs()
 
-bionetClient.connect(protocol, host, token, function (err, _remote, _user, authToken) {
+bionetClient.connect(protocol, host, authToken, function (err, _remote, _user) {
 
     if (err) {
         log("error connecting")
@@ -122,13 +123,13 @@ bionetClient.connect(protocol, host, token, function (err, _remote, _user, authT
 
     if (!_user) {
         bionetClient.login(username, password, function (err, _user, _token) {
-            token = _token
+            authToken = _token
             if (genHostConfig) {
                 //console.log("genHostConfig, token:",token,_user)
                 const hostConfig = {
                     protocol: protocol,
                     host: host,
-                    token: token
+                    token: authToken
                 }
                 console.log(JSON.stringify(hostConfig, null, 2))
                 process.exit()
