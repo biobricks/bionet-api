@@ -3,7 +3,7 @@
 "use strict";
 global.document = require('./fakeDoc')
 const BionetClient = require('./BionetClient.js')
-const BionetApi = require('./api/BionetJSApi')
+const BionetApi = require('./api/javascript/BionetApi')
 const fs = require('fs');
 const dataConversionFactory = require('./DataConversionFactory')
 const BionetBatchUpload = require('./BionetBatchUpload')
@@ -150,7 +150,7 @@ bionetClient.connect(protocol, host, authToken, function (err, _remote, _user) {
         function sendRpc() {
             const rpcRequest = {
                 "method": rpc_method,
-                "args": rpc_args,
+                "params": rpc_args,
             }
             bionetClient.rpc(rpcRequest, function (err, result) {
                 // todo: convert to export format
