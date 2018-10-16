@@ -7,6 +7,8 @@ to run, first start bionetProxy:
 
 const WebSocketClient = require('websocket').client;
 const fs = require('fs');
+const BionetProxyClient = require('../../src/api/javascript/BionetProxyClient')
+const BionetApi = require('../../src/api/javascript/BionetApi')
 
 var proto = "ws://"
 var host = "localhost"
@@ -24,6 +26,9 @@ var import_file = null
 var export_file = null
 var export_format = 'json'
 var exitWhenDone=false
+
+var bionetApi = null
+var bionetProxyClient = null
 
 function getCommandLineArgs() {
 
@@ -100,55 +105,53 @@ function getCommandLineArgs() {
 
 getCommandLineArgs()
 
-var client = new WebSocketClient();
-
-client.on('connectFailed', function (error) {
-    console.log('Connect Error: ' + error.toString());
-});
-
-function sendRpcRequest(rpcRequest, _connection) {
-    if (_connection.connected) {
-        _connection.sendUTF(JSON.stringify(rpcRequest));
-    } else {
-        console.log('sendRpcRequest: not connected to proxy host, exiting...')
-        process.exit()
-    }
-}
-
 function run(_connection) {
+    connection = _connection
     if (rpcBatch) {
         rpcBatch.forEach(function (rpc_request) {
-            sendRpcRequest(rpc_request, _connection);
+            sendRpcRequest(rpc_request,function(err,result){
+                console.log(result)
+            });
         })
-    } else {
+    } else if(rpc_method) {
         var rpcRequest = {
             "method": rpc_method,
-            "args": rpc_args
+            "params": rpc_args
         }
         exitWhenDone=true
-        sendRpcRequest(rpcRequest, _connection);
+        sendRpcRequest(rpc_request,function(err,result){
+            if (err) {
+                console.log("getLocationPathChildren error:",err)
+            } else {
+                console.log("getLocationPathChildren result:"+JSON.stringify(result,null,2))
+            }
+            process.exit();
+        });
+    } else {
+        bionetApi.getLocationPathChildren("p-70516ce1-530a-4e16-8eab-9539d402f3b5", function(err,result){
+            if (err) {
+                console.log("getLocationPathChildren error:",err)
+            } else {
+                console.log("getLocationPathChildren result:"+JSON.stringify(result,null,2))
+            }
+        })
+        bionetApi.get("p-70516ce1-530a-4e16-8eab-9539d402f3b5", function(err,result){
+            if (err) {
+                console.log("get error:",err)
+            } else {
+                console.log("get result:"+JSON.stringify(result,null,2))
+            }
+        })
+        bionetApi.get("p-70516ce1-530a-4e16-8eab-9539d402f3b5_x", function(err,result){
+            if (err) {
+                console.log("get error:",err)
+            } else {
+                console.log("get error result:"+JSON.stringify(result,null,2))
+            }
+        })
     }
 }
 
-client.on('connect', function (connection) {
-    console.log('bionet proxy webSocket connected');
-    connection.on('error', function (error) {
-        console.log("Connection Error: " + error.toString());
-        process.exit()
-    });
-    connection.on('close', function () {
-        console.log('bionet proxy connection closed');
-        process.exit()
-    });
-    connection.on('message', function (message) {
-        if (message.type === 'utf8') {
-            jsonMsg = JSON.parse(message.utf8Data)
-            console.log(JSON.stringify(jsonMsg, null, 2));
-        }
-        if (exitWhenDone) process.exit()
-    });
-    run(connection)
-});
-
-var wsUrl = proto + host + ":" + port + "/"
-client.connect(wsUrl, 'bionet-protocol');
+bionetProxyClient = new BionetProxyClient()
+bionetApi = new BionetApi(bionetProxyClient)
+bionetProxyClient.connect(proto,host,port,run)

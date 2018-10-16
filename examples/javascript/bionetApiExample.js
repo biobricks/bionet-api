@@ -1,9 +1,9 @@
 "use strict";
-const BionetClient = require('../src/BionetClient.js')
-const BionetApi = require('../src/api/BionetJSApi.js')
+const BionetClient = require('../../src/BionetClient.js')
+const BionetApi = require('../../src/api/javascript/BionetApi.js')
 
 var protocol = null
-var host = null
+var host = localhost
 var token = null
 var hostConfig = null
 var rpc_method = null
