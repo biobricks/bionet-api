@@ -14,7 +14,7 @@ module.exports = class BionetClient {
         this.host = 'localhost:8001'
         this.hostConfig = null
         this.rpc_method = null
-        this.rpc_args = []
+        this.rpc_params = []
         this.proxyPort = null
         this.username = null
         this.password = null
@@ -73,87 +73,123 @@ module.exports = class BionetClient {
         })
     }
 
+    sendJsonRpcResponse(connection, err, msgId, params) {
+        var responseMsg = {
+            jsonrpc:"2.0",
+            error: err,
+            id: msgId,
+            params: params
+        }
+        var jsonResponse = JSON.stringify(responseMsg, null, 2)
+        if (err) console.log("Send response Error:", jsonResponse)
+        connection.sendUTF(jsonResponse);
+    }
+
     serverRequest(err, connection, message) {
         const self = this
-        if (message.type === 'utf8') {
-            function sendResponse(err, msgId, response) {
-                var jsonResponse = ""
-                if (err) {
-                    // todo: format err response
-                    err.msgId = msgId
-                    var responseMsg = {
-                        err:err.message,
-                        msgId:msgId,
-                        data:null
-                    }
-                    jsonResponse = JSON.stringify(responseMsg, null, 2)
-                } else {
-                    var responseMsg = {
-                        err:null,
-                        msgId:msgId,
-                        data:response
-                    }
-                    jsonResponse = JSON.stringify(responseMsg, null, 2)
-                }
-                connection.sendUTF(jsonResponse);
+
+        if (err) {
+            var errorMsg = {
+                code: -32001,
+                message: "Receive server request message error:" + err.message,
+                data: null
             }
-            var rpc_request = JSON.parse(message.utf8Data)
-            console.log('rpc_request:', rpc_request)
-            if (!rpc_request || !rpc_request.method) {
-                // todo: format err response
-                const err = { err: "rpc method not found" };
-                console.log('rpc_request error:', err)
-                var jsonResponse = JSON.stringify(err, null, 2)
-                connection.sendUTF(jsonResponse);
-            } else {
-                var params = {}
-                var msgId = rpc_request.msgId
-                var response = {}
-                switch (rpc_request.method) {
-                    case 'connect':
-                        if (self.remote) self.remote.disconnect()
-                        params = rpc_request.args[0]
-                        self.connect(params.protocol, params.host, params.token, function (err) {
-                            response = {
-                                err: err,
-                                msg: "connect"
-                            }
-                            sendResponse(err, msgId, response)
-                        })
-                        break;
-                    case 'login':
-                        params = rpc_request.args[0]
-                        msgId = rpc_request.msgId
-                        self.login(params.username, params.password, function (err) {
-                            response = {
-                                err: err,
-                                msg: "login"
-                            }
-                            sendResponse(err, msgId, response)
-                        })
-                        break;
-                    case 'config':
-                        params = rpc_request.args[0]
-                        response = {
-                            err: err,
-                            msg: "config"
-                        }
-                        sendResponse(null, msgId, response)
-                        if (params.export_format) self.export_format = params.export_format
-                        break;
-                    case 'upload':
-                        break;
-                    default:
-                        self.rpc(rpc_request, function (err, response) {
-                            sendResponse(err, msgId, response)
-                        })
-                }
-            }
+            this.sendJsonRpcResponse(connection, errorMsg, null)
+            return
         }
-        else if (message.type === 'binary') {
-            // todo: send error
-            console.log('Received Binary Message of ' + message.binaryData.length + ' bytes');
-            connection.sendBytes(message.binaryData);
+
+        if (message.type === 'utf8') {
+
+            var rpc_request = null
+
+            /*
+            JSON RCP 2.0 error codes
+            -32700  Parse error         Invalid JSON was received by the server. An error occurred on the server while parsing the JSON text.
+            -32600  Invalid Request 	The JSON sent is not a valid Request object.
+            -32601  Method not found    The method does not exist / is not available.
+            -32602  Invalid params      Invalid method parameter(s).
+            -32603  Internal error      Internal JSON-RPC error.
+            -32000 to
+            -32099	Server error        Reserved for implementation-defined server-errors.
+            */
+
+            try {
+                rpc_request = JSON.parse(message.utf8Data)
+            } catch (e) {
+                var errorMsg = {
+                    code: -32700,
+                    message: "Invalid JSON was received by the server.",
+                    data: null
+                }
+                this.sendJsonRpcResponse(connection, errorMsg, null)
+                return
+            }
+
+            console.log('rpc_request:', rpc_request)
+
+            if (!rpc_request) {
+                // todo: format err response
+                var errorMsg = {
+                    code: -32600,
+                    message: "The JSON sent is not a valid Request object.",
+                    data: null
+                }
+                this.sendJsonRpcResponse(connection, errorMsg, null)
+                return
+            }
+
+            var msgId = rpc_request.id
+            var params = rpc_request.params
+            var response = {}
+            switch (rpc_request.method) {
+                case 'connect':
+                    if (self.remote) self.remote.disconnect()
+                    params = rpc_request.params[0]
+                    self.connect(params.protocol, params.host, params.token, function (err) {
+                        response = {
+                            message: "Connected to " + host
+                        }
+                        self.sendJsonRpcResponse(connection, err, msgId, response)
+                    })
+                    break;
+                case 'login':
+                    self.login(params.username, params.password, function (err) {
+                        response = {
+                            message: "Logged into " + host + " as user " + username
+                        }
+                        self.sendJsonRpcResponse(connection, err, msgId, response)
+                    })
+                    break;
+                case 'config':
+                    response = {
+                        message: "Proxy server re-configured"
+                    }
+                    self.sendJsonRpcResponse(connection, null, msgId, response)
+                    if (params.export_format) self.export_format = params.export_format
+                    break;
+                case 'upload':
+                    break;
+                default:
+                    self.rpc(rpc_request, function (err, response) {
+                        var errorMsg = null
+                        if (err) {
+                            errorMsg = {
+                                code: -32005,
+                                message: "Remote rpc error:"+err.message,
+                                data: null
+                            }
+                        }
+                        self.sendJsonRpcResponse(connection, errorMsg, msgId, response)
+                    })
+            }
+        } else if (message.type === 'binary') {
+            var errorMsg = {
+                code: -32002,
+                message: "Binary message received, not supported by service",
+                data: null
+            }
+            this.sendJsonRpcResponse(connection, errorMsg, null)
+            return
         }
     }
 
@@ -199,44 +235,43 @@ module.exports = class BionetClient {
 
     rpc(request, cb) {
         if (!this.remote) {
-            cb("not connected")
+            var errorMsg = {
+                code: -32000,
+                message: "Not connected to remote host",
+                data: null
+            }
+            cb(errorMsg)
             return
         }
-        if (!request.method || !request.args) {
-            cb("invalid rpc request")
+        if (!request.method) {
+            var errorMsg = {
+                code: -32601,
+                message: "Rpc method " + request.method + " not found.",
+                data: null
+            }
+            cb(errorMsg)
             return
         }
-        var rpc_args = request.args.slice(0);
-        rpc_args.push(function (err, data) {
-            // todo: check for stream result
-            cb(err, data)
+
+        var rpc_params = []
+        var stream = null
+
+        if (request.params) {
+            rpc_params = request.params.slice(0);
+        }
+        rpc_params.push(function (err, data) {
+            //invoke  rpc consumer callback
+            if (!stream) cb(err, data)
         })
-        var stream = this.remote[request.method].apply(null, rpc_args)
+        stream = this.remote[request.method].apply(null, rpc_params)
         if (stream && stream.readable) {
             this.captureStreamSync(stream, function (err, data) {
+                //invoke  rpc consumer callback
                 cb(err, data)
             })
         }
     }
     rpcStream(request, cb) {
-        if (!this.remote) {
-            cb("not connected")
-            return
-        }
-        if (!request.method || !request.args) {
-            cb("invalid rpc request")
-            return
-        }
-        var rpc_args = request.args.slice(0);
-        rpc_args.push(function (err, data) {
-            // todo: check for stream result
-            if (err) cb(err)
-        })
-        var stream = this.remote[request.method].apply(null, rpc_args)
-        if (stream && stream.readable) {
-            this.captureStreamSync(stream, function (err, data) {
-                cb(err, data)
-            })
-        }
+        this.rpc(request, cb)
     }
 }
