@@ -1,6 +1,6 @@
 "use strict";
 
-global.document=require('./fakeDoc')
+global.document = require('./fakeDoc')
 const rpc = require('./rpc')
 const fs = require('fs');
 const proxyService = require('./ProxyService')
@@ -25,7 +25,7 @@ module.exports = class BionetClient {
 
     initRpcMethods() {
         this.rpc_methods = {
-            
+
         }
     }
 
@@ -76,27 +76,39 @@ module.exports = class BionetClient {
     serverRequest(err, connection, message) {
         const self = this
         if (message.type === 'utf8') {
-            function sendResponse(err, response) {
+            function sendResponse(err, msgId, response) {
                 var jsonResponse = ""
                 if (err) {
                     // todo: format err response
-                    jsonResponse = JSON.stringify(err, null, 2)
+                    err.msgId = msgId
+                    var responseMsg = {
+                        err:err.message,
+                        msgId:msgId,
+                        data:null
+                    }
+                    jsonResponse = JSON.stringify(responseMsg, null, 2)
                 } else {
-                    jsonResponse = JSON.stringify(response, null, 2)
+                    var responseMsg = {
+                        err:null,
+                        msgId:msgId,
+                        data:response
+                    }
+                    jsonResponse = JSON.stringify(responseMsg, null, 2)
                 }
                 connection.sendUTF(jsonResponse);
             }
             var rpc_request = JSON.parse(message.utf8Data)
-            console.log('rpc_request:',rpc_request)
+            console.log('rpc_request:', rpc_request)
             if (!rpc_request || !rpc_request.method) {
                 // todo: format err response
                 const err = { err: "rpc method not found" };
-                console.log('rpc_request error:',err)
+                console.log('rpc_request error:', err)
                 var jsonResponse = JSON.stringify(err, null, 2)
                 connection.sendUTF(jsonResponse);
             } else {
-                var params={}
-                var response={}
+                var params = {}
+                var msgId = rpc_request.msgId
+                var response = {}
                 switch (rpc_request.method) {
                     case 'connect':
                         if (self.remote) self.remote.disconnect()
@@ -106,17 +118,18 @@ module.exports = class BionetClient {
                                 err: err,
                                 msg: "connect"
                             }
-                            sendResponse(err, response)
+                            sendResponse(err, msgId, response)
                         })
                         break;
                     case 'login':
                         params = rpc_request.args[0]
+                        msgId = rpc_request.msgId
                         self.login(params.username, params.password, function (err) {
                             response = {
                                 err: err,
                                 msg: "login"
                             }
-                            sendResponse(err, response)
+                            sendResponse(err, msgId, response)
                         })
                         break;
                     case 'config':
@@ -125,12 +138,14 @@ module.exports = class BionetClient {
                             err: err,
                             msg: "config"
                         }
-                        sendResponse(null, response)
+                        sendResponse(null, msgId, response)
                         if (params.export_format) self.export_format = params.export_format
+                        break;
+                    case 'upload':
                         break;
                     default:
                         self.rpc(rpc_request, function (err, response) {
-                            sendResponse(err, response)
+                            sendResponse(err, msgId, response)
                         })
                 }
             }

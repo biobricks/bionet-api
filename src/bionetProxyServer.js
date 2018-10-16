@@ -150,7 +150,7 @@ bionetClient.connect(protocol, host, authToken, function (err, _remote, _user) {
         function sendRpc() {
             const rpcRequest = {
                 "method": rpc_method,
-                "args": rpc_args
+                "args": rpc_args,
             }
             bionetClient.rpc(rpcRequest, function (err, result) {
                 // todo: convert to export format

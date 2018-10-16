@@ -15,20 +15,23 @@ if __name__ == "__main__":
     bionetApi = BionetApi()
 
     async def run():
-        async def rpcGetResult(response):
+        async def rpcGetResult(err,response):
+            if (err):
+                print(err)
+                return
             print('\nrpcGetResult:\n')
             io = StringIO()
             json.dump(response, io)
             print(io.getvalue())
 
-        async def rpcSearchResultCSV(response):
+        async def rpcSearchResultCSV(err,response):
             print('\nrpcSearchResultCSV:\n')
 
             async def writeSearchResultRow(row):
                 result = row['value']
                 id = result['id']
 
-                async def getVirtual(response):
+                async def getVirtual(err,response):
                     virtualData=response
                     freeGenes = virtualData['freeGenes']
                     freeGenesStage = virtualData['freeGenesStage']
@@ -45,6 +48,7 @@ if __name__ == "__main__":
 
         await bionetApi.searchVirtuals("r",{},rpcSearchResultCSV)
         await bionetApi.get("v-2773e301-03bd-4599-b46c-6fb46aa4b054",rpcGetResult)
+        await bionetApi.get("v-2773e301-03bd-4599-b46c-6fb46aa4b054xx",rpcGetResult)
 
     bionetApi.connect("ws://localhost:8088",run)
 

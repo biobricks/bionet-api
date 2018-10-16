@@ -39,7 +39,7 @@ function getCommandLineArgs() {
             hostConfig = JSON.parse(data)
             protocol = hostConfig.protocol
             host = hostConfig.host
-            authToken = hostConfig.token
+            token = hostConfig.token
         }
         else if (val.indexOf('-listen') >= 0) {
             proxyPort = getParam(val)
@@ -84,7 +84,7 @@ getCommandLineArgs()
 bionetClient.connect(protocol, host, token, function (err, _remote, _user) {
 
     if (err) {
-        log("error connecting")
+        log("Error connecting:",err)
         return
     }
 

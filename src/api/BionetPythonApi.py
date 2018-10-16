@@ -15,7 +15,8 @@ class BionetApi():
 		message = await self.websocket.recv()
 
 		jsonMessage = json.loads(message)
-		await consumer(jsonMessage)
+
+		await consumer(jsonMessage['err'],jsonMessage['data'])
 	def connect(self, wsUrl, consumer):
 		async def runRpc():
 			async with websockets.connect(wsUrl, subprotocols=["bionet-protocol"]) as websocket:
