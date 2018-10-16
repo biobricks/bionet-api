@@ -66,18 +66,12 @@ Upload batch of virtuals, create physical instances and place into container (no
 node ./src/bionetProxyServer -hostConfig=config.json -import_file=./tests/bulkUploadTest1.csv -import_format=csv \
 -upload_method=virtual_to_physical -upload_container=container_id
 
-```
-# Running the python api example
+Run javascript bionet api example - connects directly to bionet node:
+node ./examples/javascript/bionetApiExample.js -hostConfig=./config.json
 
-## examples/bionetPythonApiExample.py
+Run javascript bionet api proxy example - connects to bionet node via proxy server:
+node ./examples/javascript/bionetProxyClientExample.js
 
-## Usage:
-```
-Run the following commands from bionet-api:
-
-If bionet proxy service is not running, start proxy:
-node ./src/bionetProxyServer -hostConfig=config.json -listen=8088
-
-In separate terminal, run the following 
-python3 ./examples/bionetPythonApiExample.py
+Run python bionet api example - connects to bionet node via proxy server:
+python3 ./examples/python/bionetApiExample.py
 ```
