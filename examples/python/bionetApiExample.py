@@ -8,11 +8,13 @@ to run, first start bionetProxy:
 import asyncio
 from io import StringIO
 import json
-from BionetPythonApi import BionetApi
+from BionetProxyClient import BionetClient
+from BionetApi import BionetApi
 
 if __name__ == "__main__":
 
-    bionetApi = BionetApi()
+    bionetClient = BionetClient()
+    bionetApi = BionetApi(bionetClient)
 
     async def run():
         async def rpcGetResult(err,response):
@@ -50,5 +52,5 @@ if __name__ == "__main__":
         await bionetApi.get("v-2773e301-03bd-4599-b46c-6fb46aa4b054",rpcGetResult)
         await bionetApi.get("v-2773e301-03bd-4599-b46c-6fb46aa4b054xx",rpcGetResult)
 
-    bionetApi.connect("ws://localhost:8088",run)
+    bionetClient.connect("ws://localhost:8088",run)
 
