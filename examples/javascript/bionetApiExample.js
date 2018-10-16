@@ -3,7 +3,7 @@ const BionetClient = require('../../src/BionetClient.js')
 const BionetApi = require('../../src/api/javascript/BionetApi.js')
 
 var protocol = null
-var host = localhost
+var host = null
 var token = null
 var hostConfig = null
 var rpc_method = null
