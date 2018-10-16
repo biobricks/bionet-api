@@ -1,4 +1,5 @@
 "use strict";
+const fs = require('fs');
 const BionetClient = require('../../src/BionetClient.js')
 const BionetApi = require('../../src/api/javascript/BionetApi.js')
 
@@ -33,7 +34,7 @@ function getCommandLineArgs() {
         // todo: print error message and die if required arguments missing
 
         if (val.indexOf('-hostConfig') >= 0) {
-            hostConfigFile = getParam(val)
+            var hostConfigFile = getParam(val)
             const data = fs.readFileSync(hostConfigFile)
             if (!data) return
             hostConfig = JSON.parse(data)
