@@ -7,7 +7,7 @@ module.exports = class BionetApi {
 	requestSendMTA(requestID, description, cb) {
 		const rpcRequest = {
 			"method": "requestSendMTA",
-			"args": [requestID, description]
+			"params": [requestID, description]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -16,7 +16,7 @@ module.exports = class BionetApi {
 	requestBuyShippingLabel(requestID, cb) {
 		const rpcRequest = {
 			"method": "requestBuyShippingLabel",
-			"args": [requestID]
+			"params": [requestID]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -25,7 +25,7 @@ module.exports = class BionetApi {
 	requestPrintShippingLabel(requestID, cb) {
 		const rpcRequest = {
 			"method": "requestPrintShippingLabel",
-			"args": [requestID]
+			"params": [requestID]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -34,7 +34,7 @@ module.exports = class BionetApi {
 	printShippingLabel(address, cb) {
 		const rpcRequest = {
 			"method": "printShippingLabel",
-			"args": [address]
+			"params": [address]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -43,7 +43,7 @@ module.exports = class BionetApi {
 	getWorkbench(cb) {
 		const rpcRequest = {
 			"method": "getWorkbench",
-			"args": []
+			"params": []
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -52,7 +52,7 @@ module.exports = class BionetApi {
 	workbenchTree(cb) {
 		const rpcRequest = {
 			"method": "workbenchTree",
-			"args": []
+			"params": []
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -61,7 +61,7 @@ module.exports = class BionetApi {
 	getFavLocations(cb) {
 		const rpcRequest = {
 			"method": "getFavLocations",
-			"args": []
+			"params": []
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -70,7 +70,7 @@ module.exports = class BionetApi {
 	favLocationsTree(cb) {
 		const rpcRequest = {
 			"method": "favLocationsTree",
-			"args": []
+			"params": []
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -79,7 +79,7 @@ module.exports = class BionetApi {
 	saveFavLocation(material, imageData, doPrint, cb) {
 		const rpcRequest = {
 			"method": "saveFavLocation",
-			"args": [material, imageData, doPrint]
+			"params": [material, imageData, doPrint]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -88,7 +88,7 @@ module.exports = class BionetApi {
 	getChildren(id, cb) {
 		const rpcRequest = {
 			"method": "getChildren",
-			"args": [id]
+			"params": [id]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -97,7 +97,7 @@ module.exports = class BionetApi {
 	saveInWorkbench(material, imageData, doPrint, cb) {
 		const rpcRequest = {
 			"method": "saveInWorkbench",
-			"args": [material, imageData, doPrint]
+			"params": [material, imageData, doPrint]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -106,7 +106,7 @@ module.exports = class BionetApi {
 	getID(cb) {
 		const rpcRequest = {
 			"method": "getID",
-			"args": []
+			"params": []
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -115,7 +115,7 @@ module.exports = class BionetApi {
 	clearDeleted(cb) {
 		const rpcRequest = {
 			"method": "clearDeleted",
-			"args": []
+			"params": []
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -124,7 +124,7 @@ module.exports = class BionetApi {
 	undelete(key, cb) {
 		const rpcRequest = {
 			"method": "undelete",
-			"args": [key]
+			"params": [key]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -133,7 +133,7 @@ module.exports = class BionetApi {
 	delPhysical(id, cb) {
 		const rpcRequest = {
 			"method": "delPhysical",
-			"args": [id]
+			"params": [id]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -142,7 +142,7 @@ module.exports = class BionetApi {
 	delVirtual(id, cb) {
 		const rpcRequest = {
 			"method": "delVirtual",
-			"args": [id]
+			"params": [id]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -151,7 +151,7 @@ module.exports = class BionetApi {
 	physicalAutocomplete(query, cb) {
 		const rpcRequest = {
 			"method": "physicalAutocomplete",
-			"args": [query]
+			"params": [query]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -160,7 +160,7 @@ module.exports = class BionetApi {
 	addToCart(physical_id, name, cb) {
 		const rpcRequest = {
 			"method": "addToCart",
-			"args": [physical_id, name]
+			"params": [physical_id, name]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -169,7 +169,7 @@ module.exports = class BionetApi {
 	delFromCart(physical_id, cb) {
 		const rpcRequest = {
 			"method": "delFromCart",
-			"args": [physical_id]
+			"params": [physical_id]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -178,7 +178,7 @@ module.exports = class BionetApi {
 	emptyCart(cb) {
 		const rpcRequest = {
 			"method": "emptyCart",
-			"args": []
+			"params": []
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -187,7 +187,7 @@ module.exports = class BionetApi {
 	getType(name, cb) {
 		const rpcRequest = {
 			"method": "getType",
-			"args": [name]
+			"params": [name]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -196,7 +196,7 @@ module.exports = class BionetApi {
 	createAutocomplete(type, query, cb) {
 		const rpcRequest = {
 			"method": "createAutocomplete",
-			"args": [type, query]
+			"params": [type, query]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -205,7 +205,7 @@ module.exports = class BionetApi {
 	saveVirtual(material, cb) {
 		const rpcRequest = {
 			"method": "saveVirtual",
-			"args": [material]
+			"params": [material]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -214,7 +214,7 @@ module.exports = class BionetApi {
 	savePhysical(material, imageData, doPrint, cb) {
 		const rpcRequest = {
 			"method": "savePhysical",
-			"args": [material, imageData, doPrint]
+			"params": [material, imageData, doPrint]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -223,7 +223,7 @@ module.exports = class BionetApi {
 	elasticSearch(query, cb) {
 		const rpcRequest = {
 			"method": "elasticSearch",
-			"args": [query]
+			"params": [query]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -232,7 +232,7 @@ module.exports = class BionetApi {
 	inventoryTree(cb) {
 		const rpcRequest = {
 			"method": "inventoryTree",
-			"args": []
+			"params": []
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -241,7 +241,7 @@ module.exports = class BionetApi {
 	getParentPath(id, cb) {
 		const rpcRequest = {
 			"method": "getParentPath",
-			"args": [id]
+			"params": [id]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -250,7 +250,7 @@ module.exports = class BionetApi {
 	getLocationPath(id, cb) {
 		const rpcRequest = {
 			"method": "getLocationPath",
-			"args": [id]
+			"params": [id]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -259,7 +259,7 @@ module.exports = class BionetApi {
 	getPath(id, cb) {
 		const rpcRequest = {
 			"method": "getPath",
-			"args": [id]
+			"params": [id]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -268,7 +268,7 @@ module.exports = class BionetApi {
 	getImmediateChildren(path, key, cb) {
 		const rpcRequest = {
 			"method": "getImmediateChildren",
-			"args": [path, key]
+			"params": [path, key]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -277,7 +277,7 @@ module.exports = class BionetApi {
 	getLocationPathChildren(id, cb, cb2) {
 		const rpcRequest = {
 			"method": "getLocationPathChildren",
-			"args": [id]
+			"params": [id]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -286,7 +286,7 @@ module.exports = class BionetApi {
 	getVirtualBy(field, value, cb) {
 		const rpcRequest = {
 			"method": "getVirtualBy",
-			"args": [field, value]
+			"params": [field, value]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -295,7 +295,7 @@ module.exports = class BionetApi {
 	getBy(field, value, cb) {
 		const rpcRequest = {
 			"method": "getBy",
-			"args": [field, value]
+			"params": [field, value]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -304,7 +304,7 @@ module.exports = class BionetApi {
 	search(query, cb) {
 		const rpcRequest = {
 			"method": "search",
-			"args": [query]
+			"params": [query]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -313,7 +313,7 @@ module.exports = class BionetApi {
 	getUser(id, cb) {
 		const rpcRequest = {
 			"method": "getUser",
-			"args": [id]
+			"params": [id]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -322,7 +322,7 @@ module.exports = class BionetApi {
 	delUser(id, cb) {
 		const rpcRequest = {
 			"method": "delUser",
-			"args": [id]
+			"params": [id]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -331,7 +331,7 @@ module.exports = class BionetApi {
 	saveUser(id, userData, cb) {
 		const rpcRequest = {
 			"method": "saveUser",
-			"args": [id, userData]
+			"params": [id, userData]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -340,7 +340,7 @@ module.exports = class BionetApi {
 	getPeers(cb) {
 		const rpcRequest = {
 			"method": "getPeers",
-			"args": []
+			"params": []
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -349,7 +349,7 @@ module.exports = class BionetApi {
 	peerSearchOld(query, cb) {
 		const rpcRequest = {
 			"method": "peerSearchOld",
-			"args": [query]
+			"params": [query]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -358,7 +358,7 @@ module.exports = class BionetApi {
 	peerBlast(query, cb) {
 		const rpcRequest = {
 			"method": "peerBlast",
-			"args": [query]
+			"params": [query]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -367,7 +367,7 @@ module.exports = class BionetApi {
 	emptyRequestTrash(cb) {
 		const rpcRequest = {
 			"method": "emptyRequestTrash",
-			"args": []
+			"params": []
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -376,7 +376,7 @@ module.exports = class BionetApi {
 	changeRequestTrashed(id, trashed, cb) {
 		const rpcRequest = {
 			"method": "changeRequestTrashed",
-			"args": [id, trashed]
+			"params": [id, trashed]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -385,7 +385,7 @@ module.exports = class BionetApi {
 	changeRequestStatus(id, status, cb) {
 		const rpcRequest = {
 			"method": "changeRequestStatus",
-			"args": [id, status]
+			"params": [id, status]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -394,7 +394,7 @@ module.exports = class BionetApi {
 	requestMaterial(peerID, id, cb) {
 		const rpcRequest = {
 			"method": "requestMaterial",
-			"args": [peerID, id]
+			"params": [peerID, id]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -403,7 +403,7 @@ module.exports = class BionetApi {
 	freegenesCreatePlate(parent_id, name, cb) {
 		const rpcRequest = {
 			"method": "freegenesCreatePlate",
-			"args": [parent_id, name]
+			"params": [parent_id, name]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -412,7 +412,7 @@ module.exports = class BionetApi {
 	freegenesCreatePart(virtual_id, parent_id, name, cb) {
 		const rpcRequest = {
 			"method": "freegenesCreatePart",
-			"args": [virtual_id, parent_id, name]
+			"params": [virtual_id, parent_id, name]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -421,7 +421,7 @@ module.exports = class BionetApi {
 	getPandadocStatus(cb) {
 		const rpcRequest = {
 			"method": "getPandadocStatus",
-			"args": []
+			"params": []
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -430,7 +430,7 @@ module.exports = class BionetApi {
 	foo_user(cb) {
 		const rpcRequest = {
 			"method": "foo_user",
-			"args": []
+			"params": []
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -439,7 +439,7 @@ module.exports = class BionetApi {
 	testStream(cb) {
 		const rpcRequest = {
 			"method": "testStream",
-			"args": []
+			"params": []
 		}
 		var stream = this.bionetClient.rpcStream(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -448,7 +448,7 @@ module.exports = class BionetApi {
 	listDeleted(cb) {
 		const rpcRequest = {
 			"method": "listDeleted",
-			"args": []
+			"params": []
 		}
 		var stream = this.bionetClient.rpcStream(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -457,7 +457,7 @@ module.exports = class BionetApi {
 	cartStream(cb) {
 		const rpcRequest = {
 			"method": "cartStream",
-			"args": []
+			"params": []
 		}
 		var stream = this.bionetClient.rpcStream(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -466,7 +466,7 @@ module.exports = class BionetApi {
 	clearRequests(cb) {
 		const rpcRequest = {
 			"method": "clearRequests",
-			"args": []
+			"params": []
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -475,7 +475,7 @@ module.exports = class BionetApi {
 	getRequests(cb) {
 		const rpcRequest = {
 			"method": "getRequests",
-			"args": []
+			"params": []
 		}
 		var stream = this.bionetClient.rpcStream(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -484,7 +484,7 @@ module.exports = class BionetApi {
 	recentChanges(cb) {
 		const rpcRequest = {
 			"method": "recentChanges",
-			"args": []
+			"params": []
 		}
 		var stream = this.bionetClient.rpcStream(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -493,7 +493,7 @@ module.exports = class BionetApi {
 	getUsers(cb) {
 		const rpcRequest = {
 			"method": "getUsers",
-			"args": []
+			"params": []
 		}
 		var stream = this.bionetClient.rpcStream(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -502,7 +502,7 @@ module.exports = class BionetApi {
 	getInventoryRoot(cb) {
 		const rpcRequest = {
 			"method": "getInventoryRoot",
-			"args": []
+			"params": []
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -511,7 +511,7 @@ module.exports = class BionetApi {
 	getPeerInfo(cb) {
 		const rpcRequest = {
 			"method": "getPeerInfo",
-			"args": []
+			"params": []
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -520,7 +520,7 @@ module.exports = class BionetApi {
 	getStatus(cb) {
 		const rpcRequest = {
 			"method": "getStatus",
-			"args": []
+			"params": []
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -529,7 +529,7 @@ module.exports = class BionetApi {
 	foo(cb) {
 		const rpcRequest = {
 			"method": "foo",
-			"args": []
+			"params": []
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -538,7 +538,7 @@ module.exports = class BionetApi {
 	checkMasterPassword(password, cb) {
 		const rpcRequest = {
 			"method": "checkMasterPassword",
-			"args": [password]
+			"params": [password]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -547,7 +547,7 @@ module.exports = class BionetApi {
 	createUser(username, email, password, opts, cb) {
 		const rpcRequest = {
 			"method": "createUser",
-			"args": [username, email, password, opts]
+			"params": [username, email, password, opts]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -556,7 +556,7 @@ module.exports = class BionetApi {
 	getRequestStatus(pandadocID, cb) {
 		const rpcRequest = {
 			"method": "getRequestStatus",
-			"args": [pandadocID]
+			"params": [pandadocID]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -565,7 +565,7 @@ module.exports = class BionetApi {
 	getRequest(key, cb) {
 		const rpcRequest = {
 			"method": "getRequest",
-			"args": [key]
+			"params": [key]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -574,7 +574,7 @@ module.exports = class BionetApi {
 	createRequest(virtual_id, data, cb) {
 		const rpcRequest = {
 			"method": "createRequest",
-			"args": [virtual_id, data]
+			"params": [virtual_id, data]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -583,7 +583,7 @@ module.exports = class BionetApi {
 	getByHumanID(humanID, cb) {
 		const rpcRequest = {
 			"method": "getByHumanID",
-			"args": [humanID]
+			"params": [humanID]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -592,7 +592,7 @@ module.exports = class BionetApi {
 	verifyUser(code, cb) {
 		const rpcRequest = {
 			"method": "verifyUser",
-			"args": [code]
+			"params": [code]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -601,7 +601,7 @@ module.exports = class BionetApi {
 	requestPasswordReset(emailOrName, cb) {
 		const rpcRequest = {
 			"method": "requestPasswordReset",
-			"args": [emailOrName]
+			"params": [emailOrName]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -610,7 +610,7 @@ module.exports = class BionetApi {
 	checkPasswordResetCode(resetCode, cb) {
 		const rpcRequest = {
 			"method": "checkPasswordResetCode",
-			"args": [resetCode]
+			"params": [resetCode]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -619,7 +619,7 @@ module.exports = class BionetApi {
 	completePasswordReset(resetCode, password, cb) {
 		const rpcRequest = {
 			"method": "completePasswordReset",
-			"args": [resetCode, password]
+			"params": [resetCode, password]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -628,7 +628,7 @@ module.exports = class BionetApi {
 	blast(query, opts, cb) {
 		const rpcRequest = {
 			"method": "blast",
-			"args": [query, opts]
+			"params": [query, opts]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -637,7 +637,7 @@ module.exports = class BionetApi {
 	get(id, cb) {
 		const rpcRequest = {
 			"method": "get",
-			"args": [id]
+			"params": [id]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -646,7 +646,7 @@ module.exports = class BionetApi {
 	requestLocalMaterial(id, requesterEmail, physicalAddress, name, org, msg, cb) {
 		const rpcRequest = {
 			"method": "requestLocalMaterial",
-			"args": [id, requesterEmail, physicalAddress, name, org, msg]
+			"params": [id, requesterEmail, physicalAddress, name, org, msg]
 		}
 		this.bionetClient.rpc(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -655,7 +655,7 @@ module.exports = class BionetApi {
 	searchVirtuals(query, opts, cb) {
 		const rpcRequest = {
 			"method": "searchVirtuals",
-			"args": [query, opts]
+			"params": [query, opts]
 		}
 		var stream = this.bionetClient.rpcStream(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -664,7 +664,7 @@ module.exports = class BionetApi {
 	searchPhysicals(query, opts, cb) {
 		const rpcRequest = {
 			"method": "searchPhysicals",
-			"args": [query, opts]
+			"params": [query, opts]
 		}
 		var stream = this.bionetClient.rpcStream(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -673,7 +673,7 @@ module.exports = class BionetApi {
 	blastStream(query, opts, cb) {
 		const rpcRequest = {
 			"method": "blastStream",
-			"args": [query, opts]
+			"params": [query, opts]
 		}
 		var stream = this.bionetClient.rpcStream(rpcRequest, function (err, result) {
 			cb(err, result)
@@ -682,7 +682,7 @@ module.exports = class BionetApi {
 	peerSearch(methodName, query, opts, cb) {
 		const rpcRequest = {
 			"method": "peerSearch",
-			"args": [methodName, query, opts]
+			"params": [methodName, query, opts]
 		}
 		var stream = this.bionetClient.rpcStream(rpcRequest, function (err, result) {
 			cb(err, result)
